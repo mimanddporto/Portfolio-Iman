@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Iman Dwi Darmawan – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    if (localStorage.getItem('portfolio-theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --card: #f8fafc;
+      --border: rgba(15,23,42,0.12);
+      --primary: #3b82f6;
+      --cyan: #22d3ee;
+      --muted: #475569;
+      --muted-light: #334155;
+      --white: #0f172a;
+      --button-text: #ffffff;
+      --nav-bg: rgba(255,255,255,0.82);
+      --hero-overlay: rgba(255,255,255,0.82);
+      --section-alt: #f8fafc;
+      --button-surface: rgba(15,23,42,0.04);
+      --button-surface-hover: rgba(15,23,42,0.09);
+    }
+    [data-theme="dark"] {
+      --bg: #050d1a;
+      --card: #0d1829;
+      --border: rgba(255,255,255,0.08);
+      --muted: #64748b;
+      --muted-light: #94a3b8;
+      --white: #f8fafc;
+      --button-text: #050d1a;
+      --nav-bg: rgba(5,13,26,0.8);
+      --hero-overlay: rgba(5,13,26,0.72);
+      --section-alt: rgba(255,255,255,0.02);
+      --button-surface: rgba(255,255,255,0.06);
+      --button-surface-hover: rgba(255,255,255,0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); line-height: 1.6; transition: background-color .25s ease, color .25s ease; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 3rem;
+      backdrop-filter: blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 2rem; }
+    .nav-brand { font-size: 1.25rem; font-weight: 700; color: var(--white); transition: color .2s; }
+    .nav-brand:hover { color: var(--primary); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: .875rem; font-weight: 500; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-icons { display: flex; align-items: center; gap: 1rem; }
+    .nav-icons a { color: var(--muted); font-size: 1.25rem; transition: color .2s; }
+    .nav-icons a:hover { color: var(--white); }
+    .theme-toggle {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .5rem .75rem; border: 1px solid var(--border); border-radius: 9999px;
+      background: var(--button-surface); color: var(--white); font: inherit;
+      font-size: .75rem; font-weight: 600; cursor: pointer;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .theme-toggle:hover { background: var(--button-surface-hover); border-color: rgba(59,130,246,0.5); }
+    .theme-toggle i { color: var(--primary); }
+
+    /* HERO */
+    #home {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 6rem 3rem 3rem; position: relative; overflow: hidden;
+    }
+    #hero-video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; background: var(--hero-overlay); z-index: 0;
+    }
+    .hero-inner {
+      max-width: 72rem; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-badge { font-family: 'JetBrains Mono', monospace; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); margin-bottom: .75rem; }
+    .hero-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem; }
+    .hero-title span { background: linear-gradient(90deg, var(--primary), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-desc { color: var(--muted-light); max-width: 38rem; font-size: 1rem; line-height: 1.75; margin-bottom: 2rem; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .hero-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.5rem; border-radius: 9999px;
+      background: var(--button-surface); border: 1px solid var(--border);
+      font-size: .875rem; font-weight: 500; color: var(--white);
+      transition: all .2s; cursor: pointer;
+    }
+    .hero-btn:hover { background: var(--button-surface-hover); border-color: rgba(59,130,246,0.5); }
+    .hero-photo-wrap {
+      width: 22rem; height: 22rem; border-radius: 1rem; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 40px rgba(59,130,246,0.3); flex-shrink: 0; position: relative;
+    }
+    .hero-photo-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(59,130,246,0.1); mix-blend-mode: overlay; z-index: 1;
+    }
+    .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+
+    /* SECTIONS */
+    section { padding: 6rem 3rem; }
+    .section-inner { max-width: 72rem; margin: 0 auto; }
+    .section-title { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+    .section-bar { width: 5rem; height: 4px; background: var(--primary); border-radius: 9999px; margin-bottom: 3rem; }
+    .section-bar-cyan { background: var(--cyan); }
+
+    /* EXPERIENCE TIMELINE */
+    #experience { background: var(--bg); }
+    .timeline {
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      transform: translateX(-50%);
+    }
+    .exp-item {
+      display: flex; align-items: flex-start; gap: 2rem;
+      margin-bottom: 4rem; position: relative;
+    }
+    .exp-item:nth-child(odd) { flex-direction: row-reverse; }
+    .exp-dot {
+      position: absolute; left: 50%; top: 1.5rem;
+      transform: translateX(-50%);
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      background: var(--card); border: 3px solid var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; font-weight: 700; color: var(--primary);
+      font-family: 'JetBrains Mono', monospace; z-index: 1; flex-shrink: 0;
+    }
+    .exp-card {
+      width: calc(50% - 3rem); background: var(--card);
+      border: 1px solid var(--border); border-radius: 1.25rem;
+      padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: border-color .2s;
+    }
+    .exp-card:hover { border-color: rgba(59,130,246,0.3); }
+    .exp-date { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--primary); margin-bottom: .5rem; }
+    .exp-role { font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: .25rem; }
+    .exp-meta { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; }
+    .exp-meta span { color: var(--muted-light); font-weight: 600; }
+    .exp-bullets { list-style: disc; padding-left: 1.25rem; color: var(--muted-light); font-size: .875rem; margin-bottom: 1rem; }
+    .exp-bullets li { margin-bottom: .4rem; }
+    .exp-read-more {
+      background: none; border: none; cursor: pointer;
+      color: var(--cyan); font-size: .875rem; font-weight: 500;
+      margin-bottom: 1rem; padding: 0; transition: color .2s;
+    }
+    .exp-read-more:hover { color: #67e8f9; }
+    .exp-img-wrap {
+      border-radius: .5rem; overflow: hidden; border: 1px solid var(--border);
+      aspect-ratio: 16/9; cursor: zoom-in; position: relative;
+    }
+    .exp-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s; }
+    .exp-img-wrap:hover img { transform: scale(1.05); }
+    .exp-img-hint {
+      position: absolute; inset: 0; background: rgba(0,0,0,0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .exp-img-wrap:hover .exp-img-hint { background: rgba(0,0,0,0.2); }
+    .exp-img-hint span {
+      background: rgba(0,0,0,0.5); color: white; font-size: .75rem;
+      padding: .25rem .75rem; border-radius: 9999px;
+      opacity: 0; transition: opacity .2s;
+    }
+    .exp-img-wrap:hover .exp-img-hint span { opacity: 1; }
+    .extra-bullets { display: none; }
+    .extra-bullets.open { display: block; }
+
+    /* PROJECTS */
+    #projects { background: var(--section-alt); }
+    .filter-wrap { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+    .filter-btn {
+      padding: .35rem 1rem; border-radius: 9999px; border: 1px solid var(--border);
+      background: var(--card); color: var(--muted); font-size: .75rem;
+      font-family: 'JetBrains Mono', monospace; cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { color: var(--white); border-color: rgba(59,130,246,0.5); }
+    .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .proj-card {
+      border-radius: 1.25rem; overflow: hidden; border: 1px solid var(--border);
+      background: var(--card); aspect-ratio: 4/3; position: relative; cursor: pointer;
+    }
+    .proj-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s; }
+    .proj-card:hover img { transform: scale(1.08); }
+    .proj-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 50%, transparent 100%);
+      opacity: 0.85; transition: opacity .3s;
+    }
+    .proj-card:hover .proj-overlay { opacity: 0.96; }
+    .proj-info {
+      position: absolute; inset: 0; padding: 1.5rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .proj-cat { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--cyan); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+    .proj-title { font-size: .95rem; font-weight: 700; color: white; margin-bottom: .5rem; line-height: 1.3; }
+    .proj-desc { font-size: .75rem; color: #d1d5db; opacity: 0; transition: opacity .3s .05s; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .proj-card:hover .proj-desc { opacity: 1; }
+    .proj-card[data-hidden="true"] { display: none; }
+
+    /* RESUME */
+    #resume { background: var(--bg); text-align: center; }
+    #resume .section-inner { max-width: 48rem; }
+    .resume-desc { color: var(--muted-light); margin-bottom: 2rem; max-width: 36rem; margin-left: auto; margin-right: auto; }
+    .download-btn {
+      display: inline-flex; align-items: center; gap: .75rem;
+      padding: 1rem 2rem; border-radius: 9999px;
+       background: var(--primary); color: var(--button-text); font-weight: 700; font-size: 1rem;
+      box-shadow: 0 0 20px rgba(59,130,246,0.22); transition: background .2s;
+    }
+    .download-btn:hover { background: #2563eb; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 2rem; font-size: .875rem;
+      color: var(--muted); border-top: 1px solid var(--border);
+       background: var(--bg);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.95); align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: .75rem; box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
+    .lightbox-close {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: none; color: white;
+      font-size: 1.25rem; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; transition: background .2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+    /* FADE-IN ANIMATION */
+    .fade-in { opacity: 0; transform: translateY(2rem); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo-wrap { width: 16rem; height: 16rem; margin: 0 auto; }
+      .timeline::before { left: 1.25rem; }
+      .exp-item, .exp-item:nth-child(odd) { flex-direction: column; padding-left: 3.5rem; }
+      .exp-dot { left: 1.25rem; }
+      .exp-card { width: 100%; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .theme-toggle span { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-photo-wrap { width: 14rem; height: 14rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="#home" class="nav-brand">Home</a>
+    <div class="nav-links">
+      <a href="#resume">Resume</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+    </div>
+  </div>
+  <div class="nav-icons">
+    <a href="https://www.linkedin.com/in/mimandd" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="https://www.instagram.com/iman_kerja/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      <span>Dark mode</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <video id="hero-video" autoplay loop muted playsinline src="hero-bg.mp4"></video>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="fade-in" style="transition-delay:.1s">
+      <p class="hero-badge">Engineering Graduate</p>
+      <h1 class="hero-title">Hi, I'm <span>Muhammad Iman Dwi Darmawan,</span> an Engineering Graduate.</h1>
+      <p class="hero-desc">Currently working as a Maintenance Engineer in water treatment plant (WTP) operations at Moya Indonesia, performing preventive and corrective maintenance on mechanical and rotating equipment, as well as electrical systems including three-phase motors and star-delta control panels, while supporting troubleshooting and ensuring system reliability.</p>
+      <div class="hero-btns">
+        <a href="https://www.linkedin.com/in/mimandd" target="_blank" class="hero-btn">LinkedIn <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.8rem"></i></a>
+        <a href="#resume" class="hero-btn">Resume <i class="fa-solid fa-chevron-right" style="font-size:.8rem"></i></a>
+        <a href="#projects" class="hero-btn">Projects <i class="fa-solid fa-chevron-right" style="font-size:.8rem"></i></a>
+        <a href="#experience" class="hero-btn">Experience <i class="fa-solid fa-chevron-right" style="font-size:.8rem"></i></a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap fade-in" style="transition-delay:.3s">
+      <img src="images/hero.jpeg" alt="Muhammad Iman Dwi Darmawan" />
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="fade-in">
+      <h2 class="section-title">Experience</h2>
+      <div class="section-bar"></div>
+    </div>
+    <div class="timeline">
+
+      <!-- Moya -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot">MI</div>
+        <div class="exp-card">
+          <p class="exp-date">Feb 2026 – Present</p>
+          <h3 class="exp-role">Maintenance</h3>
+          <p class="exp-meta"><span>Moya Indonesia, Air Batam Hulu</span> • Batam, Indonesia</p>
+          <ul class="exp-bullets">
+            <li>Performed preventive and corrective maintenance on electrical systems at multiple water treatment plants.</li>
+            <li>Troubleshot and repaired three-phase motors and star-delta control panels in accordance with SOP and safety standards.</li>
+            <li class="extra-bullet" style="display:none">Conducted routine inspections and coordinated with operations to minimize downtime.</li>
+          </ul>
+          <button class="exp-read-more" onclick="toggleMore(this)">Read more (1 more)</button>
+          <div class="exp-img-wrap" onclick="openLightbox('images/moya.jpeg')">
+            <img src="images/moya.jpeg" alt="Moya Indonesia" />
+            <div class="exp-img-hint"><span>Click to expand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NFU -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot">NFU</div>
+        <div class="exp-card">
+          <p class="exp-date">Sep 2024 – Feb 2025</p>
+          <h3 class="exp-role">Research Intern – Mechanical Design System Lab</h3>
+          <p class="exp-meta"><span>National Formosa University</span> • Taiwan</p>
+          <ul class="exp-bullets">
+            <li>Designed and modeled an automated conveyor system using Autodesk Fusion 360, enabling 60 units/hour automated throughput.</li>
+            <li>Executed Finite Element Analysis, stress &amp; deflection on conveyor and Arm Robot, maintaining 6.5%–18.2% stress utilization with safety factors up to 15.3.</li>
+            <li class="extra-bullet" style="display:none">Conducted motion and kinematic simulations to validate robotic movement and improve mechanism reliability by ~30%.</li>
+          </ul>
+          <button class="exp-read-more" onclick="toggleMore(this)">Read more (1 more)</button>
+          <div class="exp-img-wrap" onclick="openLightbox('images/research-intern.jpeg')">
+            <img src="images/research-intern.jpeg" alt="National Formosa University" />
+            <div class="exp-img-hint"><span>Click to expand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deservisman -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot">DS</div>
+        <div class="exp-card">
+          <p class="exp-date">Oct 2021 – Aug 2025</p>
+          <h3 class="exp-role">Technical Support Lead</h3>
+          <p class="exp-meta"><span>Deservisman</span> • Batam, Indonesia</p>
+          <ul class="exp-bullets">
+            <li>Managed daily technical service operations, handling 15–20 work orders per month, ensuring on-time completion and quality standards.</li>
+            <li>Developed and enforced standardized SOPs and quality control checks, reducing service errors and maintaining an average turnaround time of 30 minutes/device.</li>
+            <li class="extra-bullet" style="display:none">Improved inventory and customer follow-up system, achieving 2–6 repeat orders within three months per customer.</li>
+          </ul>
+          <button class="exp-read-more" onclick="toggleMore(this)">Read more (1 more)</button>
+          <div class="exp-img-wrap" onclick="openLightbox('images/deservisman.jpeg')">
+            <img src="images/deservisman.jpeg" alt="Deservisman" />
+            <div class="exp-img-hint"><span>Click to expand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sumitomo -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot">SE</div>
+        <div class="exp-card">
+          <p class="exp-date">Jan 2021 – May 2021</p>
+          <h3 class="exp-role">Production Intern</h3>
+          <p class="exp-meta"><span>Sumitomo Electric Wiring Systems, Inc.</span> • Batam, Indonesia</p>
+          <ul class="exp-bullets">
+            <li>Supported daily automotive wiring harness production with a cross-functional team of 15+ operators and line leaders, ensuring smooth line operations.</li>
+            <li>Inspected and repaired 10–15 defective units/day, directly improving quality compliance and reducing rework.</li>
+            <li class="extra-bullet" style="display:none">Delivered consistent daily output of 250 units with zero defects over the final 3 months, contributing to stable production performance.</li>
+          </ul>
+          <button class="exp-read-more" onclick="toggleMore(this)">Read more (1 more)</button>
+          <div class="exp-img-wrap" onclick="openLightbox('images/sumitomo.jpeg')">
+            <img src="images/sumitomo.jpeg" alt="Sumitomo" />
+            <div class="exp-img-hint"><span>Click to expand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rapala -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot">RV</div>
+        <div class="exp-card">
+          <p class="exp-date">May 2020 – Dec 2020</p>
+          <h3 class="exp-role">Production Intern</h3>
+          <p class="exp-meta"><span>Rapala VMC Indonesia</span> • Batam, Indonesia</p>
+          <ul class="exp-bullets">
+            <li>Assisted supervisors in managing hardcast and spincast production operations for 14 staff, supporting material preparation and in-process quality checks.</li>
+            <li>Supported daily production preparation, monitoring, and evaluation in compliance with SOPs.</li>
+            <li class="extra-bullet" style="display:none">Contributed to improved workflow consistency and incremental efficiency gains across routine production cycles.</li>
+          </ul>
+          <button class="exp-read-more" onclick="toggleMore(this)">Read more (1 more)</button>
+          <div class="exp-img-wrap" onclick="openLightbox('images/rapala.jpeg')">
+            <img src="images/rapala.jpeg" alt="Rapala VMC" />
+            <div class="exp-img-hint"><span>Click to expand</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="fade-in">
+      <h2 class="section-title">Projects</h2>
+      <div class="section-bar section-bar-cyan"></div>
+      <div class="filter-wrap" id="filter-wrap"></div>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-inner fade-in">
+    <h2 class="section-title">Resume</h2>
+    <div class="section-bar" style="margin: 1rem auto 2rem"></div>
+    <p class="resume-desc">A comprehensive overview of my academic background, technical skills, and professional experience in the industry.</p>
+    <a href="resume.pdf" download="CV_Muhammad_Iman_Dwi_Darmawan.pdf" class="download-btn">
+      <i class="fa-solid fa-download"></i> Download PDF Resume
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; <span id="year"></span> Muhammad Iman Dwi Darmawan Portfolio</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+  <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+</div>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  function updateThemeToggle() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    themeToggle.setAttribute('aria-pressed', String(dark));
+    themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    themeToggle.innerHTML = dark
+      ? '<i class="fa-solid fa-sun" aria-hidden="true"></i><span>Light mode</span>'
+      : '<i class="fa-solid fa-moon" aria-hidden="true"></i><span>Dark mode</span>';
+  }
+  themeToggle.onclick = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (dark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('portfolio-theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('portfolio-theme', 'dark');
+    }
+    updateThemeToggle();
+  };
+  updateThemeToggle();
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Read more toggle
+  function toggleMore(btn) {
+    const card = btn.closest('.exp-card');
+    const extras = card.querySelectorAll('.extra-bullet');
+    const open = extras[0].style.display !== 'none';
+    extras.forEach(el => el.style.display = open ? 'none' : 'list-item');
+    btn.textContent = open ? `Read more (${extras.length} more)` : 'Show less';
+  }
+
+  // Projects data
+  const projects = [
+    { title: "3D Technical Drawing – Fusion 360", category: "CAD 3D", desc: "3D technical drawing using Fusion 360 software, covering part design creation, assembly processes, and analysis through FEM simulation.", image: "images/cad3d.jpg" },
+    { title: "Cargo Ship Lines & General Plan", category: "CAD 2D", desc: "Lines Plan and General Plan of a cargo ship. The General Plan shows the layout of the ship's spaces, while the Line Plan depicts the shape of the ship's hull.", image: "images/cad2d.jpg" },
+    { title: "Machining Process", category: "Machining", desc: "Machining is a process of shaping or refining a workpiece by removing material using cutting tools on machine tools such as lathes, milling machines, and drilling machines.", image: "images/machining.jpg" },
+    { title: "Fish Model – Sand Casting", category: "Sand Casting", desc: "A fish model used as fishing bait, created through sand casting — a metal casting process involving pouring molten metal into a disposable sand mold.", image: "images/sandcasting.jpg" },
+    { title: "Resin Keychain", category: "Resin Casting", desc: "A resin keychain produced through resin casting — pouring liquid resin into a flexible silicone mold to produce a product with fine details after the resin hardens.", image: "images/resincasting.jpg" },
+    { title: "4 DOF Robot Arm", category: "Mechatronic", desc: "Design and development of a 4 DOF Robot Arm using Arduino Uno as a microcontroller, integrating mechanical, electronic, and software systems.", image: "images/mechatronic1.jpg" },
+    { title: "Fire Alarm System", category: "Mechatronic", desc: "Creation of a fire alarm system using gas sensors and flame sensors, with Arduino Uno as the microcontroller.", image: "images/mechatronic2.jpg" },
+    { title: "Deservisman", category: "Deservisman", desc: "A gadget and electronic device repair service founded in 2021, still operating today. Serves as practice in business development and people management.", image: "images/proj-deservisman.jpg" },
+    { title: "Seed Sorting Machine – SCAMPER Method", category: "Final Year Project", desc: "Design of a seedling sorting machine using phenotyping technology. Employs a conveyor system (60 units/hour), Intel RealSense sensor, and a 3-DOF robotic arm.", image: "images/finalyear.jpg" },
+    { title: "IISMA 2024 – National Formosa University, Taiwan", category: "Study Abroad", desc: "Studied at National Formosa University in Taiwan as an IISMA 2024 Awardee, majoring in Mechanical and Automation Engineering.", image: "images/studyabroad.jpg" },
+    { title: "Student Representative – IISMA NFU", category: "Leadership", desc: "Representative and leader of NFU Awardees during the IISMA program, liaising between the Indonesian Trade Office, the Ministry of Education and Culture, and other institutions.", image: "images/leadership1.jpg" },
+    { title: "President of Student Association", category: "Leadership", desc: "Led an organization focused on social and professional fields with 300+ members. Successfully ran national projects including the 7th Conference on Design and Manufacture.", image: "images/leadership2.jpg" },
+    { title: "Marine-preneur 2024, Best Team Industrial Exposure & IISMA Awardee", category: "Honor & Awards", desc: "Crowd Favorite Champion at Marine-preneur Competition 2024 (IKA TPK). Best Team 1st Place at Industrial Exposure 2024 (IISMA). IISMA 2024 Awardee at National Formosa University.", image: "images/awards1.jpg" },
+    { title: "Best Paper Award – 9th CDMA", category: "Honor & Awards", desc: "Best Paper Award at Mechatronics Innovation for Smart and Environmentally Friendly Automation – 9th Proceedings of Conference on Design Manufacture Engineering and Its Application.", image: "images/awards2.jpg" },
+  ];
+
+  const filters = ["All", "CAD 3D", "CAD 2D", "Machining", "Sand Casting", "Resin Casting", "Mechatronic", "Deservisman", "Final Year Project", "Study Abroad", "Leadership", "Honor & Awards"];
+  let activeFilter = "All";
+
+  // Build filter buttons
+  const filterWrap = document.getElementById('filter-wrap');
+  filters.forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (f === 'All' ? ' active' : '');
+    btn.textContent = f;
+    btn.onclick = () => {
+      activeFilter = f;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProjects();
+    };
+    filterWrap.appendChild(btn);
+  });
+
+  // Build project cards
+  const grid = document.getElementById('projects-grid');
+  function renderProjects() {
+    grid.innerHTML = '';
+    const visible = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
+    visible.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'proj-card';
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.title}" />
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <span class="proj-cat">${p.category}</span>
+          <h3 class="proj-title">${p.title}</h3>
+          <p class="proj-desc">${p.desc}</p>
+        </div>
+      `;
+      card.onclick = () => openLightbox(p.image);
+      grid.appendChild(card);
+    });
+  }
+  renderProjects();
+
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
